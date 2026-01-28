@@ -13,7 +13,10 @@ async function LoadData() {
                 <td>${post.title}</td>
                 <td>${post.views}</td>
                 <td>${post.isDeleted ? '(Deleted)' : ''}</td>
-                <td><input type='submit' value='delete' onclick='Delete(${post.id})'/></td>
+                <td>
+                    <input type='submit' value='Edit' onclick='EditPost(${post.id})'/>
+                    <input type='submit' value='Delete' onclick='Delete(${post.id})'/>
+                </td>
             </tr>`
         }
         return false;
@@ -31,6 +34,7 @@ async function Save() {
         // Có ID -> Update (PUT)
         let getItem = await fetch("http://localhost:3000/posts/" + id);
         if (getItem.ok) {
+            let post = await getItem.json();
             let res = await fetch('http://localhost:3000/posts/' + id,
                 {
                     method: 'PUT',
@@ -39,8 +43,10 @@ async function Save() {
                     },
                     body: JSON.stringify(
                         {
+                            id: id,
                             title: title,
-                            views: views
+                            views: views,
+                            isDeleted: post.isDeleted || false
                         }
                     )
                 })
@@ -85,6 +91,23 @@ async function Save() {
     LoadData();
 
 }
+
+async function EditPost(id) {
+    let res = await fetch("http://localhost:3000/posts/" + id);
+    if (res.ok) {
+        let post = await res.json();
+        document.getElementById("id_txt").value = post.id;
+        document.getElementById("title_txt").value = post.title;
+        document.getElementById("view_txt").value = post.views;
+    }
+}
+
+function ClearForm() {
+    document.getElementById("id_txt").value = "";
+    document.getElementById("title_txt").value = "";
+    document.getElementById("view_txt").value = "";
+}
+
 async function Delete(id) {
     // Soft delete: Cập nhật isDeleted = true
     let getItem = await fetch("http://localhost:3000/posts/" + id);
@@ -149,6 +172,7 @@ async function SaveComment() {
                     },
                     body: JSON.stringify(
                         {
+                            id: id,
                             text: text,
                             postId: postId
                         }
