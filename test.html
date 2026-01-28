@@ -5,23 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="main.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        input[type="text"] {
+            padding: 5px;
+            margin: 5px;
+        }
+        input[type="submit"] {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        h2 {
+            color: #333;
+            margin-top: 30px;
+        }
+        .form-container {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
+    <h2>Posts Management</h2>
+    <div class="form-container">
+        <input type="text" id="id_txt" placeholder="ID (để trống khi tạo mới)"/>
+        <input type="text" id="title_txt" placeholder="Title"/>
+        <input type="text" id="view_txt" placeholder="Views"/>
+        <input type="submit" value="Save Post" onclick="Save()"/>
+    </div>
+    
     <div>
         <table>
             <thead>
-
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Views</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
             </thead>
             <tbody id="table-body">
 
             </tbody>
         </table>
     </div> 
+    
+    <h2>Comments Management</h2>
+    <div class="form-container">
+        <input type="text" id="comment_id_txt" placeholder="ID (để trống khi tạo mới)"/>
+        <input type="text" id="comment_text_txt" placeholder="Comment Text"/>
+        <input type="text" id="comment_postId_txt" placeholder="Post ID"/>
+        <input type="submit" value="Save Comment" onclick="SaveComment()"/>
+        <input type="submit" value="Clear Form" onclick="ClearCommentForm()"/>
+    </div>
+    
     <div>
-        <input type="text" id="id_txt"/>
-        <input type="text" id="title_txt"/>
-        <input type="text" id="view_txt"/>
-        <input type="submit" value="submit" onclick="Save()"/>
-    </div>   
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Comment</th>
+                    <th>Post ID</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="comments-table-body">
+
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
